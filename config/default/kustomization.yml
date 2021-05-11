@@ -1,0 +1,8 @@
+namespace: mitmproxy
+
+commonLabels:
+  app.kubernetes.io/name: mitmproxy
+  app.kubernetes.io/version: 6.0.2
+
+bases:
+  - ../proxy

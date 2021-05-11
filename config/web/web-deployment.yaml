@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mitmproxy
+  namespace: mitmproxy
+spec:
+  template:
+    spec:
+      containers:
+      - name: mitmproxy
+        args:
+        - mitmweb
+        - --web-host=0.0.0.0
+        ports:
+        - containerPort: 8081
+          name: web-port
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8081
+            httpHeaders:
+            - name: X-Kubernetes
+              value: readinessProbe
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 5
+          timeoutSeconds: 7
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8081
+            httpHeaders:
+            - name: X-Kubernetes
+              value: livenessProbe
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 7
+          failureThreshold: 5
