@@ -1,0 +1,5 @@
+bases:
+  - ../default
+
+patchesStrategicMerge:
+  - web-deployment.yaml
